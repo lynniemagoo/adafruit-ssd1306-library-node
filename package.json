@@ -9,7 +9,21 @@
   "directories": {
     "example": "examples"
   },
+"scripts": {
+    "build": "npm run build:node:production && npm run build:module",
+    "build:debug": "npm run build:node:debug",
+    "build:module": "cross-env BABEL_ENV=module babel src -d es --source-maps --config-file ../../babel.config.js",
+    "build:node": "babel src -d dist --source-maps --config-file ../../babel.config.js",
+    "build:node:debug": "cross-env BABEL_ENV=development npm run build:node",
+    "build:node:production": "cross-env BABEL_ENV=production npm run build:node",
+    "build:watch": "npm run build:node:debug -- -- --watch --verbose",
+    "test": "cross-env BABEL_ENV=test mocha --require @babel/register test/**/*.js",
+    "test:coverage": "nyc npm run test",
+    "test:watch": "npm run test -- --reporter min --watch"
+  },
+    
   "scripts": {
+    "build": "cd scripts && make clean && make splash1.js splash2.js && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
