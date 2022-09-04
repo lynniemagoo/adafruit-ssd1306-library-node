@@ -6,6 +6,9 @@
   "dependencies": {
     "adafruit-gfx-library": "^1.0.0"
   },  
+  "files": {
+    "lib": "lib"
+  },
   "directories": {
     "example": "examples"
   },
