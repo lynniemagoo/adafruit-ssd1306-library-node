@@ -27,7 +27,7 @@ const delay = Adafruit_GFX_Library.Utils.sleepMs;
 const {SSD1306_WHITE, SSD1306_BLACK, SSD1306_INVERSE,
        WHITE, BLACK, INVERSE} = require("../../index").Adafruit_SSD1306_Colors;
 
-       
+
 const toInt = Math.trunc,
       fMax = Math.max,
       fMin = Math.min,
@@ -35,7 +35,7 @@ const toInt = Math.trunc,
       fRandom = Math.random;
 
 
-// Random Number Helper method 
+// Random Number Helper method
 // See https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 function randomInteger(min, max) {
     return fFloor(fRandom() * (max - min + 1)) + min;
@@ -81,7 +81,7 @@ async function testDrawLine(display) {
         }
     };
     await doWork();
-        
+
     doWork = async _ => {
         for(i=h-1; i>=0; i-=4) {
             await display.drawLine(0, h-1, w-1, i, SSD1306_WHITE)
@@ -90,7 +90,7 @@ async function testDrawLine(display) {
         }
     };
     await doWork();
-        
+
     await delay(part_delay);
 
     await display.clearDisplay();
@@ -175,7 +175,7 @@ const drawCircleWorker = async (display, loop_delay = 1) => {
 
 const fillCircleWorker = async (display, loop_delay = 1) => {
     const w = display.width(), h = display.height();
-    
+
     for(let i=fMax(w,h)/2; i>0; i-=3) {
         // The INVERSE color is used so circles alternate white/black
         await display.fillCircle(w/2, h/2, i, SSD1306_INVERSE)
@@ -187,7 +187,7 @@ const fillCircleWorker = async (display, loop_delay = 1) => {
 
 const drawRoundRectWorker = async (display, loop_delay = 1) => {
     const w = display.width(), h = display.height();
-    
+
     for(let i=0; i<h/2-2; i+=2) {
         await display.drawRoundRect(i, i, w-2*i, h-2*i, h/4, SSD1306_WHITE)
                      .display();
@@ -198,7 +198,7 @@ const drawRoundRectWorker = async (display, loop_delay = 1) => {
 
 const fillRoundRectWorker = async (display, loop_delay = 1) => {
     const w = display.width(), h = display.height();
-    
+
     for(let i=0; i<h/2-2; i+=2) {
         // The INVERSE color is used so round-rects alternate white/black
         await display.fillRoundRect(i, i, w-2*i, h-2*i, h/4, SSD1306_INVERSE)
@@ -210,7 +210,7 @@ const fillRoundRectWorker = async (display, loop_delay = 1) => {
 
 const drawTriangleWorker = async (display, loop_delay = 1) => {
     const w = display.width(), h = display.height();
-    
+
     for(let i=0; i<fMax(w,h)/2; i+=5) {
         await display.drawTriangle(w/2, h/2-i, w/2-i, h/2+i,  w/2+i, h/2+i, SSD1306_WHITE)
                      .display();
@@ -237,12 +237,12 @@ const drawCharWorker = async (display, loop_delay = 1) => {
                  .setTextColor(SSD1306_WHITE)   // Draw white text
                  .setCursor(0, 0)               // Start at top-left corner
                  .cp437(true);                  // Use full 256 char 'Code Page 437' font
-    
+
     // Not all the characters will fit on the display. This is normal.
     // Library will draw what it can and the rest will be clipped.
     for(let i=0; i<256; i++) {
         // display.write will simply chain work onto the queue.
-        // Don't have to await each step as this is done below with final 
+        // Don't have to await each step as this is done below with final
         // display.wait.
         display.write((i == '\n') ? " " : i);
     }
@@ -256,15 +256,15 @@ const drawStylesWorker = async (display, loop_delay = 1) => {
     // Display supports chaining and operations are added to a queue.
     // Therefore, one can do multiple operations as needed using 'dot' chaining.
     // At the end of one's work, one can simply await the display to complete all operations.
-    
+
     display.setTextSize(1)                  // Normal 1:1 pixel scale
            .setTextColor(SSD1306_WHITE)     // Draw white text
            .setCursor(0,0)                  // Start at top-left corner
-           .println("Hello, world!");       
+           .println("Hello, world!");
 
     display.setTextColor(SSD1306_BLACK, SSD1306_WHITE) // Draw 'inverse' text
            // TODO support numeric format in println
-           .println(3.141592);               
+           .println(3.141592);
 
     display.setTextSize(2)             // Draw 2X-scale text
            .setTextColor(SSD1306_WHITE)
@@ -273,7 +273,7 @@ const drawStylesWorker = async (display, loop_delay = 1) => {
            // TODO support hex format in println
            //display.print(F("0x")); display.println(0xDEADBEEF, HEX);
            .display();
-           
+
     // Wait for display to complete all work.
     await display;
 };
@@ -335,8 +335,8 @@ const drawBitmapWorker = async (display, loop_delay = 1) => {
     //display.drawBitmap(
     await display.draw1BitBitmap((w  - LOGO_WIDTH ) / 2,
                                  (h - LOGO_HEIGHT) / 2,
-                                 LOGO_BMP, 
-                                 LOGO_WIDTH, 
+                                 LOGO_BMP,
+                                 LOGO_WIDTH,
                                  LOGO_HEIGHT, SSD1306_WHITE)
                  .display();
     await delay(1000);
@@ -352,7 +352,7 @@ async function testAnimate(display, bitmap, bitmapWidth, bitmapHeight, animateTi
 
     const w = display.width(), h = display.height();
 
-    
+
     let f, icons = [];
 
     // Initialize 'snowflake' positions
@@ -369,7 +369,7 @@ async function testAnimate(display, bitmap, bitmapWidth, bitmapHeight, animateTi
         icons.push(icon);
     }
     const startTimeMs = new Date().valueOf();
-    
+
     while ((new Date().valueOf() - startTimeMs) <= animateTimeMs) {
         display.clearDisplay(); // Clear the display buffer
 
@@ -380,7 +380,7 @@ async function testAnimate(display, bitmap, bitmapWidth, bitmapHeight, animateTi
         }
 
         await display.display(); // Show the display buffer on the screen
-        await delay(200);        // Pause for 2/10 second 
+        await delay(200);        // Pause for 2/10 second
 
         // Then update coordinates of each flake...
         for(f=0; f< NUMFLAKES; f++) {
@@ -415,7 +415,7 @@ module.exports = {
     drawCharWorker,
     drawStylesWorker,
     scrollTextWorker,
-    drawBitmapWorker,    
+    drawBitmapWorker,
     testAnimate,
     workerRunner,
     LOGO_BMP,

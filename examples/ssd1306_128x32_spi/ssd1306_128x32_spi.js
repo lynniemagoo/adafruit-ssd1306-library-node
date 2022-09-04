@@ -41,7 +41,7 @@ const {
     drawCharWorker,
     drawStylesWorker,
     scrollTextWorker,
-    drawBitmapWorker,    
+    drawBitmapWorker,
     testAnimate,
     workerRunner,
     LOGO_BMP,
@@ -60,24 +60,27 @@ class Adafruit_SSD1306_SPI extends Mixin_SPI_Display(Adafruit_SSD1306) {};
 
 async function main() {
     //Constants to use for vccSelection - default(SSD1306_SWITCHCAPVCC).
-    // 
+    //
     //const SSD1306_EXTERNALVCC = 0x01;  ///< External display voltage source
     //const SSD1306_SWITCHCAPVCC = 0x02; ///< Gen. display voltage from 3.3V
     const displayOptions = {
         width:128,
         height:32,
         rotation:0,
+        /*noSplash:true,*/
         vccSelection:0x02,
         rstGpioNb:12,
         spiDeviceNumber:1
     }
-    
+
     const display = new Adafruit_SSD1306_SPI(displayOptions);
     // Startup display - same as original adafruit begin() but options specified in the constructor.
     await display.startup();
+    await delay(3000);
+
 
     let count = 4, rotation = 0;
-    
+
     while (count--) {
         await display.setRotation(rotation);
 
@@ -91,10 +94,10 @@ async function main() {
 
         await workerRunner(display, drawRoundRectWorker);
         await workerRunner(display, fillRoundRectWorker);
-        
+
         await workerRunner(display, drawTriangleWorker);
         await workerRunner(display, fillTriangleWorker);
-        
+
         await workerRunner(display, drawCharWorker);
         await workerRunner(display, drawStylesWorker);
         await workerRunner(display, scrollTextWorker);
@@ -105,7 +108,7 @@ async function main() {
         await delay(1000);
         await display.invertDisplay(false);
         await delay(3000);
-        
+
         // Do 10 seconds of animation.
         await testAnimate(display, LOGO_BMP, LOGO_WIDTH, LOGO_HEIGHT, 10000);
         rotation +=1;
