@@ -10,6 +10,9 @@
     "example": "examples"
   },
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "HOLD": {
     "build": "cd scripts && make clean && make splash1.js splash2.js && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
