@@ -24,8 +24,8 @@
 const Adafruit_GFX_Library = require("adafruit-gfx-library");
 const delay = Adafruit_GFX_Library.Utils.sleepMs;
 
-
-const {Adafruit_SSD1306} = require("../index");
+const BASE_PATH = "../../";
+const {Adafruit_SSD1306} = require(BASE_PATH + "index");
 
 
 const {
