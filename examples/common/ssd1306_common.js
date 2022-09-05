@@ -43,7 +43,7 @@ function randomInteger(min, max) {
 
 
 async function testDrawLine(display) {
-    const loop_delay = 1, w = display.width(), h = display.height();
+    const loop_delay = 35, w = display.width(), h = display.height();
     const part_delay = 2000;
     let i, doWork;
 
@@ -157,7 +157,7 @@ const fillRectWorker = async (display, loop_delay = 1) => {
         // The INVERSE color is used so rectangles alternate white/black
         await display.fillRect(i, i, w-i*2, h-i*2, SSD1306_INVERSE)
                      .display(); // Update screen with each newly-drawn rectangle
-        await delay(1);
+        await delay(loop_delay);
     }
 };
 
@@ -168,7 +168,7 @@ const drawCircleWorker = async (display, loop_delay = 1) => {
     for(let i=0; i<fMax(w,h)/2; i+=2) {
         await display.drawCircle(w/2, w/2, i, SSD1306_WHITE)
                      .display();
-        await delay(1);
+        await delay(loop_delay);
     }
 };
 
@@ -180,7 +180,7 @@ const fillCircleWorker = async (display, loop_delay = 1) => {
         // The INVERSE color is used so circles alternate white/black
         await display.fillCircle(w/2, h/2, i, SSD1306_INVERSE)
                      .display(); // Update screen with each newly-drawn circle
-        await delay(1);
+        await delay(loop_delay);
     }
 };
 
@@ -398,7 +398,7 @@ async function testAnimate(display, bitmap, bitmapWidth, bitmapHeight, animateTi
 
 async function workerRunner(display, worker) {
     await display.clearDisplay();
-    await worker(display, 1);
+    await worker(display, 35);
     await delay(2000);
 }
 
