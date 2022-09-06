@@ -57,10 +57,6 @@ async function testDrawLine(display) {
                          .display(); // Update screen with each newly-drawn line
             await delay(loop_delay);
         }
-    };
-    await doWork();
-
-    doWork = async _ => {
         for(i=0; i<h; i+=4) {
             await display.drawLine(0, 0, w-1, i, SSD1306_WHITE)
                          .display();
@@ -79,10 +75,6 @@ async function testDrawLine(display) {
                          .display();
             await delay(loop_delay);
         }
-    };
-    await doWork();
-
-    doWork = async _ => {
         for(i=h-1; i>=0; i-=4) {
             await display.drawLine(0, h-1, w-1, i, SSD1306_WHITE)
                          .display();
@@ -101,10 +93,6 @@ async function testDrawLine(display) {
                          .display();
             await delay(loop_delay);
         }
-    };
-    await doWork();
-
-    doWork = async _ => {
         for(i=h-1; i>=0; i-=4) {
             await display.drawLine(w-1, h-1, 0, i, SSD1306_WHITE)
                          .display();
@@ -123,10 +111,6 @@ async function testDrawLine(display) {
                          .display();
             await delay(loop_delay);
         }
-    };
-    await doWork();
-
-    doWork = async _ => {
         for(i=w-1; i>0; i-=4) {
             await display.drawLine(w-1, 0, i, h-1, SSD1306_WHITE)
                          .display();
@@ -134,8 +118,6 @@ async function testDrawLine(display) {
         }
     };
     await doWork();
-
-    await delay(part_delay);
 }
 
 
