@@ -70,7 +70,10 @@ async function main() {
         rotation:0,
         /*noSplash:true,*/
         vccSelection:0x02,
-        rstGpioNb:12,
+        dcGpioNb:24,  // If module requires Data/Clock GPIO, specify it (-1 is default)
+        rstGpioNb:12, // If desire is to have hardware reset controlled by this module, 
+                      // by this module, set this value. (-1 is default)
+                      // if set to -1 then will not be used.
         spiDeviceNumber:1
     }
 
