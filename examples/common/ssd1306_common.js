@@ -21,7 +21,7 @@
  included in any redistribution.
  **************************************************************************/
 'use strict';
-const Adafruit_GFX_Library = require("adafruit-gfx-library");
+const Adafruit_GFX_Library = require("@lynniemagoo/adafruit-gfx-library");
 const delay = Adafruit_GFX_Library.Utils.sleepMs;
 
 const {SSD1306_WHITE, SSD1306_BLACK, SSD1306_INVERSE,
