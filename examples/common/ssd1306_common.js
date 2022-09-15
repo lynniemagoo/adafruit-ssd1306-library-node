@@ -34,6 +34,8 @@ const toInt = Math.trunc,
       fFloor = Math.floor,
       fRandom = Math.random;
 
+// End of test delay. ie. Time in milliseconds before proceeding to next test.
+const EOT_DELAY = 1500;
 
 // Random Number Helper method
 // See https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
@@ -44,178 +46,175 @@ function randomInteger(min, max) {
 
 async function testDrawLine(display) {
     const loop_delay = 35, w = display.width(), h = display.height();
-    const part_delay = 2000;
     let i, doWork;
 
     await display.clearDisplay(); // Clear display buffer
-
-    doWork = async _ => {
-        for(i=0; i<w; i+=4) {
-            // the JS version of this display is chainable so we can chain methods
-            // that modify the buffer or display.
-            await display.drawLine(0, 0, i, h-1, SSD1306_WHITE)
-                         .display(); // Update screen with each newly-drawn line
-            await delay(loop_delay);
-        }
-        for(i=0; i<h; i+=4) {
-            await display.drawLine(0, 0, w-1, i, SSD1306_WHITE)
-                         .display();
-            await delay(loop_delay);
-        }
-    };
-    await doWork();
-
-    await delay(part_delay);
+    for(i=0; i<w; i+=4) {
+        // the JS version of this display is chainable so we can chain methods
+        // that modify the buffer or display.
+        await display.drawLine(0, 0, i, h-1, SSD1306_WHITE)
+                     .display(); // Update screen with each newly-drawn line
+        await delay(loop_delay);
+    }
+    for(i=0; i<h; i+=4) {
+        await display.drawLine(0, 0, w-1, i, SSD1306_WHITE)
+                     .display();
+        await delay(loop_delay);
+    }
+    await delay(EOT_DELAY);
 
     await display.clearDisplay();
-
-    doWork = async _ => {
-        for(i=0; i<w; i+=4) {
-            await display.drawLine(0, h-1, i, 0, SSD1306_WHITE)
-                         .display();
-            await delay(loop_delay);
-        }
-        for(i=h-1; i>=0; i-=4) {
-            await display.drawLine(0, h-1, w-1, i, SSD1306_WHITE)
-                         .display();
-            await delay(loop_delay);
-        }
-    };
-    await doWork();
-
-    await delay(part_delay);
+    for(i=0; i<w; i+=4) {
+        await display.drawLine(0, h-1, i, 0, SSD1306_WHITE)
+                     .display();
+        await delay(loop_delay);
+    }
+    for(i=h-1; i>=0; i-=4) {
+        await display.drawLine(0, h-1, w-1, i, SSD1306_WHITE)
+                     .display();
+        await delay(loop_delay);
+    }
+    await delay(EOT_DELAY);
 
     await display.clearDisplay();
-
-    doWork = async _ => {
-        for(i=w-1; i>=0; i-=4) {
-            await display.drawLine(w-1, h-1, i, 0, SSD1306_WHITE)
-                         .display();
-            await delay(loop_delay);
-        }
-        for(i=h-1; i>=0; i-=4) {
-            await display.drawLine(w-1, h-1, 0, i, SSD1306_WHITE)
-                         .display();
-            await delay(loop_delay);
-        }
-    };
-    await doWork();
-
-    await delay(part_delay);
+    for(i=w-1; i>=0; i-=4) {
+        await display.drawLine(w-1, h-1, i, 0, SSD1306_WHITE)
+                     .display();
+        await delay(loop_delay);
+    }
+    for(i=h-1; i>=0; i-=4) {
+        await display.drawLine(w-1, h-1, 0, i, SSD1306_WHITE)
+                     .display();
+        await delay(loop_delay);
+    }
+    await delay(EOT_DELAY);
 
     await display.clearDisplay();
-
-    doWork = async _ => {
-        for(i=0; i<h; i+=4) {
-            await display.drawLine(w-1, 0, 0, i, SSD1306_WHITE)
-                         .display();
-            await delay(loop_delay);
-        }
-        for(i=w-1; i>0; i-=4) {
-            await display.drawLine(w-1, 0, i, h-1, SSD1306_WHITE)
-                         .display();
-            await delay(loop_delay);
-        }
-    };
-    await doWork();
+    for(i=0; i<h; i+=4) {
+        await display.drawLine(w-1, 0, 0, i, SSD1306_WHITE)
+                     .display();
+        await delay(loop_delay);
+    }
+    for(i=w-1; i>0; i-=4) {
+        await display.drawLine(w-1, 0, i, h-1, SSD1306_WHITE)
+                     .display();
+        await delay(loop_delay);
+    }
+    await delay(EOT_DELAY);
 }
 
-
-const drawRectWorker = async (display, loop_delay = 1) => {
+async function testDrawRect(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
 
+    await display.clearDisplay();
     for(let i=0; i<h/2; i+=2) {
         await display.drawRect(i, i, w-2*i, h-2*i, SSD1306_WHITE)
                      .display(); // Update screen with each newly-drawn rectangle
         await delay(loop_delay);
     }
+    await delay(EOT_DELAY);
 }
 
 
-const fillRectWorker = async (display, loop_delay = 1) => {
+async function testFillRect(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
-
+    
+    await display.clearDisplay();
     for(let i=0; i<h/2; i+=3) {
         // The INVERSE color is used so rectangles alternate white/black
         await display.fillRect(i, i, w-i*2, h-i*2, SSD1306_INVERSE)
                      .display(); // Update screen with each newly-drawn rectangle
         await delay(loop_delay);
     }
-};
+    await delay(EOT_DELAY);
+}
 
 
-const drawCircleWorker = async (display, loop_delay = 1) => {
+async function testDrawCircle(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
 
+    await display.clearDisplay();
     for(let i=0; i<fMax(w,h)/2; i+=2) {
         await display.drawCircle(w/2, w/2, i, SSD1306_WHITE)
                      .display();
         await delay(loop_delay);
     }
-};
+    await delay(EOT_DELAY);
+}
 
 
-const fillCircleWorker = async (display, loop_delay = 1) => {
+async function testFillCircle(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
 
+    await display.clearDisplay();
     for(let i=fMax(w,h)/2; i>0; i-=3) {
         // The INVERSE color is used so circles alternate white/black
         await display.fillCircle(w/2, h/2, i, SSD1306_INVERSE)
                      .display(); // Update screen with each newly-drawn circle
         await delay(loop_delay);
     }
-};
+    await delay(EOT_DELAY);
+}
 
 
-const drawRoundRectWorker = async (display, loop_delay = 1) => {
+async function testDrawRoundRect(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
 
+    await display.clearDisplay();
     for(let i=0; i<h/2-2; i+=2) {
         await display.drawRoundRect(i, i, w-2*i, h-2*i, h/4, SSD1306_WHITE)
                      .display();
         await delay(loop_delay);
     }
-};
+    await delay(EOT_DELAY);
+}
 
 
-const fillRoundRectWorker = async (display, loop_delay = 1) => {
+async function testFillRoundRect(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
 
+    await display.clearDisplay();
     for(let i=0; i<h/2-2; i+=2) {
         // The INVERSE color is used so round-rects alternate white/black
         await display.fillRoundRect(i, i, w-2*i, h-2*i, h/4, SSD1306_INVERSE)
                      .display();
         await delay(loop_delay);
     }
-};
+    await delay(EOT_DELAY);
+}
 
 
-const drawTriangleWorker = async (display, loop_delay = 1) => {
+async function testDrawTriangle(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
 
+    await display.clearDisplay();
     for(let i=0; i<fMax(w,h)/2; i+=5) {
         await display.drawTriangle(w/2, h/2-i, w/2-i, h/2+i,  w/2+i, h/2+i, SSD1306_WHITE)
                      .display();
         await delay(loop_delay);
     }
-};
+    await delay(EOT_DELAY);
+}
 
 
-const fillTriangleWorker = async (display, loop_delay = 1) => {
+async function testFillTriangle(display, loop_delay = 35) {
     const w = display.width(), h = display.height();
 
+    await display.clearDisplay();
     for(let i=fMax(w,h)/2; i>0; i-=5) {
         // The INVERSE color is used so triangles alternate white/black
         await display.drawTriangle(w/2, h/2-i, w/2-i, h/2+i,  w/2+i, h/2+i, SSD1306_INVERSE)
                      .display();
         await delay(loop_delay);
     }
-};
+    await delay(EOT_DELAY);
+}
 
 
-const drawCharWorker = async (display, loop_delay = 1) => {
+async function testDrawChar(display, loop_delay = 35) {
 
-    await display.setTextSize(1)                // Normal 1:1 pixel scale
+    await display.clearDisplay()
+                 .setTextSize(1)                // Normal 1:1 pixel scale
                  .setTextColor(SSD1306_WHITE)   // Draw white text
                  .setCursor(0, 0)               // Start at top-left corner
                  .cp437(true);                  // Use full 256 char 'Code Page 437' font
@@ -230,16 +229,18 @@ const drawCharWorker = async (display, loop_delay = 1) => {
     }
 
     await display.display();
-};
+    await delay(EOT_DELAY);
+}
 
 
-const drawStylesWorker = async (display, loop_delay = 1) => {
+async function testDrawStyles(display, loop_delay = 35) {
 
     // Display supports chaining and operations are added to a queue.
     // Therefore, one can do multiple operations as needed using 'dot' chaining.
     // At the end of one's work, one can simply await the display to complete all operations.
 
-    display.setTextSize(1)                  // Normal 1:1 pixel scale
+    display.clearDisplay()
+           .setTextSize(1)                  // Normal 1:1 pixel scale
            .setTextColor(SSD1306_WHITE)     // Draw white text
            .setCursor(0,0)                  // Start at top-left corner
            .println("Hello, world!");
@@ -258,12 +259,14 @@ const drawStylesWorker = async (display, loop_delay = 1) => {
 
     // Wait for display to complete all work.
     await display;
-};
+    await delay(EOT_DELAY);
+}
 
 
-const scrollTextWorker = async (display, loop_delay = 1) => {
+async function testScrollText(display, loop_delay = 35) {
 
-    await display.setTextSize(2) // Draw 2X-scale text
+    await display.clearDisplay()
+                 .setTextSize(2) // Draw 2X-scale text
                  .setTextColor(SSD1306_WHITE)
                  .setCursor(10, 0)
                  //.println(F("scroll"));
@@ -312,7 +315,7 @@ const LOGO_BMP = [
 ];
 
 
-const drawBitmapWorker = async (display, loop_delay = 1) => {
+async function testDrawBitmap(display) {
     const w = display.width(), h = display.height();
     //display.drawBitmap(
     await display.draw1BitBitmap((w  - LOGO_WIDTH ) / 2,
@@ -321,7 +324,7 @@ const drawBitmapWorker = async (display, loop_delay = 1) => {
                                  LOGO_WIDTH,
                                  LOGO_HEIGHT, SSD1306_WHITE)
                  .display();
-    await delay(1000);
+    await delay(EOT_DELAY);
 };
 
 
@@ -378,28 +381,21 @@ async function testAnimate(display, bitmap, bitmapWidth, bitmapHeight, animateTi
     }
 }
 
-async function workerRunner(display, worker) {
-    await display.clearDisplay();
-    await worker(display, 35);
-    await delay(2000);
-}
-
 module.exports = {
     testDrawLine,
-    drawRectWorker,
-    fillRectWorker,
-    drawCircleWorker,
-    fillCircleWorker,
-    drawRoundRectWorker,
-    fillRoundRectWorker,
-    drawTriangleWorker,
-    fillTriangleWorker,
-    drawCharWorker,
-    drawStylesWorker,
-    scrollTextWorker,
-    drawBitmapWorker,
+    testDrawRect,
+    testFillRect,
+    testDrawCircle,
+    testFillCircle,
+    testDrawRoundRect,
+    testFillRoundRect,
+    testDrawTriangle,
+    testFillTriangle,
+    testDrawChar,
+    testDrawStyles,
+    testScrollText,
+    testDrawBitmap,
     testAnimate,
-    workerRunner,
     LOGO_BMP,
     LOGO_HEIGHT,
     LOGO_WIDTH

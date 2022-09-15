@@ -31,20 +31,19 @@ const {Adafruit_SSD1306} = require(BASE_PATH + "index");
 
 const {
     testDrawLine,
-    drawRectWorker,
-    fillRectWorker,
-    drawCircleWorker,
-    fillCircleWorker,
-    drawRoundRectWorker,
-    fillRoundRectWorker,
-    drawTriangleWorker,
-    fillTriangleWorker,
-    drawCharWorker,
-    drawStylesWorker,
-    scrollTextWorker,
-    drawBitmapWorker,
+    testDrawRect,
+    testFillRect,
+    testDrawCircle,
+    testFillCircle,
+    testDrawRoundRect,
+    testFillRoundRect,
+    testDrawTriangle,
+    testFillTriangle,
+    testDrawChar,
+    testDrawStyles,
+    testScrollText,
+    testDrawBitmap,
     testAnimate,
-    workerRunner,
     LOGO_BMP,
     LOGO_HEIGHT,
     LOGO_WIDTH
@@ -89,22 +88,24 @@ async function main() {
 
         await testDrawLine(display);
 
-        await workerRunner(display, drawRectWorker);
-        await workerRunner(display, fillRectWorker);
+        await testDrawRect(display);
+        await testFillRect(display);
+        await testDrawRect(display);
+        await testFillRect(display);
 
-        await workerRunner(display, drawCircleWorker);
-        await workerRunner(display, fillCircleWorker);
+        await testDrawCircle(display);
+        await testFillCircle(display);
 
-        await workerRunner(display, drawRoundRectWorker);
-        await workerRunner(display, fillRoundRectWorker);
+        await testDrawRoundRect(display);
+        await testFillRoundRect(display);
 
-        await workerRunner(display, drawTriangleWorker);
-        await workerRunner(display, fillTriangleWorker);
+        await testDrawTriangle(display);
+        await testFillTriangle(display);
 
-        await workerRunner(display, drawCharWorker);
-        await workerRunner(display, drawStylesWorker);
-        await workerRunner(display, scrollTextWorker);
-        await workerRunner(display, drawBitmapWorker);
+        await testDrawChar(display);
+        await testDrawStyles(display);
+        await testScrollText(display);
+        await testDrawBitmap(display);
 
         // Invert and restore display, pausing in-between
         await display.invertDisplay(true);
