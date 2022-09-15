@@ -89,8 +89,6 @@ async function main() {
 
         await testDrawRect(display);
         await testFillRect(display);
-        await testDrawRect(display);
-        await testFillRect(display);
 
         await testDrawCircle(display);
         await testFillCircle(display);
