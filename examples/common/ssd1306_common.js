@@ -317,8 +317,8 @@ const LOGO_BMP = [
 
 async function testDrawBitmap(display) {
     const w = display.width(), h = display.height();
-    //display.drawBitmap(
-    await display.draw1BitBitmap((w  - LOGO_WIDTH ) / 2,
+    await display.clearDisplay()
+                 .draw1BitBitmap((w  - LOGO_WIDTH ) / 2,
                                  (h - LOGO_HEIGHT) / 2,
                                  LOGO_BMP,
                                  LOGO_WIDTH,
