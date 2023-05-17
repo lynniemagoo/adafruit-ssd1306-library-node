@@ -1,6 +1,6 @@
 {
   "name": "@lynniemagoo/adafruit-ssd1306-library",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJS Promise-based port of C/C++ Adafruit_SSD1306 from Github",
   "main": "index.js",
   "dependencies": {
