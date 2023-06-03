@@ -44,9 +44,9 @@ function randomInteger(min, max) {
 }
 
 
-async function testDrawLine(display) {
-    const loop_delay = 35, w = display.width(), h = display.height();
-    let i, doWork;
+async function testDrawLine(display, loop_delay = 35) {
+    const w = display.width(), h = display.height();
+    let i;
 
     await display.clearDisplay(); // Clear display buffer
     for(i=0; i<w; i+=4) {
