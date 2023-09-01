@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1.1 2023-08-31
+- Fixed critical issue where display not initialized correctly following refactor to use Adafruit_GrayOLED base class.
+- Based on a forum post describing how to get vertical scroll only by using startscrolldiagleft() or 
+  startscrolldiagright() passing the same value for startPage and endPage, add single direction
+  vertical scrolling example into ssd1306_common.js.
+
 ## v1.1.0 2023-08-02
 
 - Refactored to use base class of Adafruit_GrayOLED so that we can optimize data writes.

@@ -277,19 +277,50 @@ async function testScrollText(display, loop_delay = 35) {
     await delay(100);
 
     // Scroll in various directions, pausing in-between:
-    await display.startscrollright(0x00, 0x0F);
+    await display.startscrollright(0x00, 0x07);
     await delay(2000);
     await display.stopscroll();
+    await display.display();
     await delay(1000);
-    await display.startscrollleft(0x00, 0x0F);
+    await display.startscrollleft(0x00, 0x07);
     await delay(2000);
     await display.stopscroll();
+    await display.display();
     await delay(1000);
     await display.startscrolldiagright(0x00, 0x07);
     await delay(2000);
+    await display.stopscroll();
+    await display.display();
+    await delay(1000);
     await display.startscrolldiagleft(0x00, 0x07);
     await delay(2000);
     await display.stopscroll();
+    await display.display();
+    await delay(1000);
+    await display.startscrolldiagright(0x00, 0x07);
+    await delay(2000);
+    await display.stopscroll();
+    await display.display();
+    await delay(1000);
+    // Although the SSD1306 datasheet says no constant vertical scrolling, there's a workaround
+    // that can be done to achieve vertical scroll in a single direction using
+    // startscrolldiagleft or startscrolldiagright.
+    // 
+    // In order to only scroll display vertically upwords with no horizontal
+    // scrolling, we pass the start and end page parameters with an identical value.
+    // If the display rotation is 0 or 1 , pass a value of 0x07 (last page) for both parameters.
+    // Otherwise, pass a value of 0x00 (first page).
+    // one can force vertical scrolling using startscrolldiagleft or startscrolldiagright
+    const verticalPage = (display.getRotation() <= 1) ? 0x07 : 0x00;
+    await display.startscrolldiagleft(verticalPage, verticalPage);
+    await delay(2000);
+    await display.stopscroll();
+    await display.display();
+    await delay(1000);
+    await display.startscrolldiagright(verticalPage, verticalPage);
+    await delay(2000);
+    await display.stopscroll();
+    await display.display();
     await delay(1000);
 };
 
